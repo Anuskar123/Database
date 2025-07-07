@@ -1,980 +1,1111 @@
-// Java Programming TCA Sample Questions Bank
+// Database Management Systems Question Bank
 const questionBank = [
-    // Question 1 - Interface Conflict
+    // Set 1: Database Fundamentals
     {
         id: 1,
-        type: "single-choice",
-        question: "Analyze this code and determine what happens:\n\n```java\npublic interface Alpha {\n    void display() {\n        System.out.println(\"Alpha method\");\n    }\n}\n\npublic interface Beta {\n    void display() {\n        System.out.println(\"Beta method\");\n    }\n}\n\nclass Gamma implements Alpha, Beta {\n}\n\npublic class DemoApp {\n    public static void main(String[] args) {\n        Gamma obj = new Gamma();\n        obj.display();\n    }\n}\n```\n\nWhat will happen when this code is compiled and run?",
+        type: "multiple-choice",
+        question: "Which of the following statements are true of a simple database?",
         options: [
-            "Compilation error",
-            "Alpha method", 
-            "Beta method",
-            "Runtime exception"
+            "A structured set of data",
+            "A store of data that allows information retrieval",
+            "Manages database structure",
+            "Defines, manipulates, retrieves and manages data in a database",
+            "Controls shared database access by multiple applications"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "This code will cause a compilation error because class Gamma implements two interfaces with conflicting default methods. The class must override the display() method to resolve the conflict."
+        correctAnswers: [0, 1],
+        points: 2,
+        explanation: "A simple database is a structured set of data that allows information retrieval. It doesn't manage structure or control access like a DBMS."
     },
-
-    // Question 2 - Inheritance Syntax
     {
         id: 2,
-        type: "single-choice",
-        question: "Which of the following is the correct syntax to extend a class named PersonDetails in Java?",
+        type: "multiple-choice",
+        question: "Which of the following statements are true of a database management system?",
         options: [
-            "class Student extends PersonDetails",
-            "class Student extends PersonDetails()",
-            "class Student inherit PersonDetails",
-            "class Student child PersonDetails"
+            "A structured set of data",
+            "A store of data that allows information retrieval",
+            "Manages database structure",
+            "Defines, manipulates, retrieves and manages data in a database",
+            "Controls shared database access by multiple applications"
+        ],
+        correctAnswers: [2, 3, 4],
+        points: 3,
+        explanation: "A DBMS manages database structure, defines/manipulates/retrieves data, and controls shared access."
+    },
+    {
+        id: 3,
+        type: "multiple-choice",
+        question: "Which of the following statements are true of relational databases?",
+        options: [
+            "Stores data in tables",
+            "Stores data in columns and rows",
+            "Links tables through matching columns",
+            "Information is represented in objects",
+            "Links records together like a family tree"
+        ],
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Relational databases store data in tables with columns and rows, and link tables through matching columns."
+    },
+    {
+        id: 4,
+        type: "multiple-choice",
+        question: "Which of the following are benefits of relational databases?",
+        options: [
+            "Improved data access and retrieval",
+            "Reduces data inconsistency",
+            "Improves speed of information retrieval",
+            "Improved data analyses and management information",
+            "Stores modern data types"
+        ],
+        correctAnswers: [0, 1, 3],
+        points: 3,
+        explanation: "Relational databases improve data access, reduce inconsistency, and improve data analysis capabilities."
+    },
+    {
+        id: 5,
+        type: "multiple-choice",
+        question: "Which of the following are limitations of relational databases?",
+        options: [
+            "Reduced data access and retrieval",
+            "Increased data inconsistency",
+            "Reduced speed of information retrieval",
+            "Reduced data analyses and management information",
+            "Can't handle modern data types"
+        ],
+        correctAnswers: [4],
+        points: 2,
+        explanation: "The main limitation is that relational databases can't handle modern data types effectively."
+    },
+
+    // Set 2: Relational Model
+    {
+        id: 6,
+        type: "multiple-choice",
+        question: "Which of the following statements are true of a relational database?",
+        options: [
+            "Governed by integrity rules",
+            "Stores data in relations",
+            "Stores data based on the relational model",
+            "A set of tuples",
+            "An unordered set of attributes"
+        ],
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Relational databases are governed by integrity rules, store data in relations, and are based on the relational model."
+    },
+    {
+        id: 7,
+        type: "single-choice",
+        question: "Who developed the relational model?",
+        options: [
+            "EF Codd",
+            "CJ Date",
+            "Oracle",
+            "IBM",
+            "Tim Berners-Lee"
         ],
         correctAnswers: [0],
         points: 1,
-        explanation: "The correct syntax to extend a class in Java is 'class ChildClass extends ParentClass'. The 'extends' keyword is used for inheritance."
+        explanation: "EF Codd developed the relational model in 1970 while working at IBM."
     },
-
-    // Question 3 - Abstract Class
-    {
-        id: 3,
-        type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\nabstract class Vehicle {\n    abstract void start();\n}\n\nclass Car extends Vehicle {\n    void start() {\n        System.out.println(\"Engine starts\");\n    }\n}\n\npublic class VehicleTest {\n    public static void main(String[] args) {\n        Vehicle myCar = new Car();\n        myCar.start();\n    }\n}\n```\n\nWhat is the output?",
-        options: [
-            "Compilation error",
-            "Engine starts",
-            "Vehicle starts", 
-            "Runtime exception"
-        ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "The code will output 'Engine starts'. The Car class properly implements the abstract method start() from Vehicle class, and polymorphism allows calling the overridden method."
-    },
-
-    // Question 4 - Method Overloading
-    {
-        id: 4,
-        type: "single-choice", 
-        question: "What is method overloading in Java?",
-        options: [
-            "Two methods with same name and same parameters",
-            "Two methods with same name but different parameters",
-            "A child class method overriding a parent class method",
-            "Implementing an interface method"
-        ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "Method overloading occurs when two or more methods in the same class have the same name but different parameters (different number, type, or order of parameters)."
-    },
-
-    // Question 5 - Final Method Override
-    {
-        id: 5,
-        type: "single-choice",
-        question: "If a subclass overrides a method marked final in the parent class, what happens?",
-        options: [
-            "Code compiles and runs",
-            "Compilation error",
-            "Runtime exception",
-            "The final method gets overridden"
-        ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "A compilation error occurs because final methods cannot be overridden by subclasses. The final keyword prevents method overriding."
-    },
-
-    // Question 6 - Final Keyword Fill-in-the-blank
-    {
-        id: 6,
-        type: "fill-blank",
-        question: "The __________ keyword in Java makes a class non-inheritable.",
-        correctAnswer: "final",
-        points: 1,
-        explanation: "The 'final' keyword when applied to a class makes it non-inheritable, meaning no other class can extend it (like String class)."
-    },
-
-    // Question 7 - Abstraction Fill-in-the-blank
-    {
-        id: 7,
-        type: "fill-blank",
-        question: "In Java, __________ refers to simplifying reality by modeling objects while hiding internal complexity.",
-        correctAnswer: "abstraction",
-        points: 1,
-        explanation: "Abstraction is the OOP concept that involves simplifying complex reality by modeling classes based on essential characteristics while hiding unnecessary details."
-    },
-
-    // Question 8 - Interface Default Method
     {
         id: 8,
         type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\ninterface Drawable {\n    default void draw() {\n        System.out.println(\"Drawing shape\");\n    }\n}\n\nclass Square implements Drawable {\n    public void draw() {\n        System.out.println(\"Drawing square\");\n    }\n}\n\npublic class DrawingApp {\n    public static void main(String[] args) {\n        Drawable shape = new Square();\n        shape.draw();\n    }\n}\n```\n\nWhat is the output?",
+        question: "Which statement best describes the main components of a relational database?",
         options: [
-            "Drawing shape",
-            "Drawing square",
-            "Compilation error",
-            "Runtime exception"
-        ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "The output is 'Drawing square' because the Square class overrides the default method from the interface, and the overridden method is called."
-    },
-
-    // Question 9 - Finally Block
-    {
-        id: 9,
-        type: "single-choice",
-        question: "Which block ensures cleanup (like closing a file) regardless of exception occurrence?",
-        options: [
-            "throw",
-            "try",
-            "catch",
-            "finally"
-        ],
-        correctAnswers: [3],
-        points: 1,
-        explanation: "The 'finally' block always executes regardless of whether an exception occurs or not, making it perfect for cleanup operations."
-    },
-
-    // Question 10 - String Concatenation
-    {
-        id: 10,
-        type: "single-choice",
-        question: "Which operator is used to concatenate two strings in Java?",
-        options: [
-            "+",
-            "&&",
-            "||",
-            "**"
+            "Relations, Columns, Tuples, Keys and Integrity Rules",
+            "Relations, Columns, Attributes, Keys and Integrity Language",
+            "Relations, Rows, Tuples, Keys and Integrity Data",
+            "Relations, Columns, Tuples, Keys and Integrity Information",
+            "Relations, Columns and Rows"
         ],
         correctAnswers: [0],
         points: 1,
-        explanation: "The '+' operator is used for string concatenation in Java. When used with strings, it concatenates them together."
+        explanation: "The main components are Relations, Columns, Tuples, Keys and Integrity Rules."
+    },
+    {
+        id: 9,
+        type: "multiple-choice",
+        question: "Which of these statements are true about relations?",
+        options: [
+            "Represented by 2 dimensional tables",
+            "Has a set of tuples",
+            "Has an unordered set of attribute values",
+            "Is a link between tables",
+            "Governs operations on the data and structures of a database",
+            "Have the same columns"
+        ],
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Relations are represented by 2D tables, have a set of tuples, and have an unordered set of attribute values."
+    },
+    {
+        id: 10,
+        type: "multiple-choice",
+        question: "Which of these statements are true about tuples?",
+        options: [
+            "Represented by 2 dimensional tables",
+            "Has a set of tuples",
+            "Has an unordered set of attribute values",
+            "Is a link between tables",
+            "Governs operations on the data and structures of a database",
+            "Have the same columns"
+        ],
+        correctAnswers: [2, 5],
+        points: 2,
+        explanation: "Tuples have an unordered set of attribute values and have the same columns within a relation."
     },
 
-    // Question 11 - String Methods
+    // Set 3: Entity-Relationship Model
     {
         id: 11,
         type: "single-choice",
-        question: "Which method removes extra spaces at the start and end of a string?",
+        question: "What best describes the main components of an entity relationship diagram?",
         options: [
-            "split()",
-            "replace()",
-            "trim()",
-            "substring()"
+            "entities, relationships, cardinality",
+            "relations, columns, attributes, keys",
+            "entities, relations, cardinality",
+            "entities, relationships, columns",
+            "attributes, domains, keys and integrity"
         ],
-        correctAnswers: [2],
+        correctAnswers: [0],
         points: 1,
-        explanation: "The trim() method removes leading and trailing whitespace from a string."
+        explanation: "ERDs consist of entities, relationships, and cardinality."
     },
-
-    // Question 12 - Exception Handling Code
     {
         id: 12,
         type: "single-choice",
-        question: "Analyze this code and identify the issue:\n\n```java\nimport java.util.Scanner;\n\npublic class InputSum {\n    public static void main(String[] args) {\n        Scanner input = new Scanner(System.in);\n        System.out.print(\"Enter numbers: \");\n        String line = input.nextLine();\n        String[] values = line.split(\" \");\n        int total = 0;\n        for (String val : values) {\n            total += Integer.parseInt(val);\n        }\n        System.out.println(\"Total: \" + total);\n    }\n}\n```\n\nWhat is the issue and fix?",
+        question: "Which of these statements are true about relationships?",
         options: [
-            "No issue",
-            "Use try-catch to handle NumberFormatException",
-            "Change split to comma",
-            "Check for null before parsing"
+            "represented by 2 dimensional tables",
+            "has a set of tuples",
+            "has an unordered set of attribute values",
+            "Is a link between tables",
+            "governs operations on the data and structures of a database",
+            "have the same columns"
         ],
-        correctAnswers: [1],
+        correctAnswers: [3],
         points: 1,
-        explanation: "The code should use try-catch to handle NumberFormatException that can occur if non-numeric input is entered when parsing with Integer.parseInt()."
+        explanation: "Relationships are links between tables/entities."
     },
-
-    // Question 13 - Array Index Bug
     {
         id: 13,
-        type: "single-choice",
-        question: "Analyze this code and identify the issue:\n\n```java\nimport java.util.Arrays;\n\npublic class SortApp {\n    public static void main(String[] args) {\n        int[] nums = {8, 4, 6, 2};\n        Arrays.sort(nums);\n        for (int i = 0; i <= nums.length; i++) {\n            System.out.println(nums[i]);\n        }\n    }\n}\n```\n\nWhat is the issue and fix?",
+        type: "multiple-choice",
+        question: "Which of the following are database modelling tools?",
         options: [
-            "No issue",
-            "Change i <= nums.length to i < nums.length",
-            "Use try-catch block",
-            "Sort in reverse order"
+            "normalisation",
+            "ERM",
+            "LDA",
+            "data flow diagrams",
+            "entity lifecycle",
+            "life drawing"
         ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "The condition 'i <= nums.length' will cause ArrayIndexOutOfBoundsException. It should be 'i < nums.length' because array indices go from 0 to length-1."
+        correctAnswers: [0, 1, 2, 3, 4],
+        points: 5,
+        explanation: "All except life drawing are database modeling tools."
     },
-
-    // Question 14 - Encapsulation Example
     {
         id: 14,
-        type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\nclass Profile {\n    private String username;\n\n    public String getUsername() {\n        return username;\n    }\n\n    public void setUsername(String name) {\n        this.username = name;\n    }\n}\n\npublic class ProfileTest {\n    public static void main(String[] args) {\n        Profile p = new Profile();\n        p.setUsername(\"Alice\");\n        System.out.println(p.getUsername());\n    }\n}\n```\n\nWhat is the output?",
+        type: "multiple-choice",
+        question: "Which of the following statements is true about a primary key?",
         options: [
-            "Alice",
-            "Compilation error",
-            "null",
-            "Runtime exception"
+            "unique identifier for an entity",
+            "every entity must have one primary key",
+            "no 2 values in a primary key can be the same",
+            "primary keys cannot take NULL values",
+            "an entity may have many primary keys",
+            "primary keys must be numbers"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "The output is 'Alice' because the setter method sets the username to 'Alice' and the getter method returns it."
+        correctAnswers: [0, 1, 2, 3],
+        points: 4,
+        explanation: "Primary keys are unique identifiers, mandatory, unique, and cannot be NULL."
     },
-
-    // Question 15 - Constructor Inheritance
     {
         id: 15,
-        type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\nclass Master {\n    Master() {\n        System.out.println(\"Master class constructor\");\n    }\n}\n\nclass Apprentice extends Master {\n    Apprentice() {\n        System.out.println(\"Apprentice class constructor\");\n    }\n}\n\npublic class InheritanceTest {\n    public static void main(String[] args) {\n        Apprentice obj = new Apprentice();\n    }\n}\n```\n\nWhat is the output?",
+        type: "multiple-choice",
+        question: "Which of the following are tests for entities?",
         options: [
-            "Master class constructor\nApprentice class constructor",
-            "Apprentice class constructor\nMaster class constructor",
-            "Only Apprentice class constructor",
-            "Only Master class constructor"
+            "is it of importance",
+            "do we need to store data about it",
+            "are there many occurrences",
+            "is it unique",
+            "can it take NULLs",
+            "is it related to other entities"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "The parent class constructor is called first (implicitly with super()), then the child class constructor. Output: Master class constructor, then Apprentice class constructor."
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Entity tests include importance, need to store data, and multiple occurrences."
     },
 
-    // Question 16 - Is-a Relationship
+    // Set 4: Database Components
     {
         id: 16,
-        type: "single-choice",
-        question: "What does the \"is-a\" relationship represent in Java OOP?",
+        type: "multiple-choice",
+        question: "Which of the following statements are true about an entity?",
         options: [
-            "Inheritance",
-            "Polymorphism",
-            "Abstraction", 
-            "Encapsulation"
+            "encapsulate business policy and data",
+            "a person, place, thing or concept about which data can be collected",
+            "made up of a number of attributes",
+            "maybe be optional or mandatory",
+            "a group of data items"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "The 'is-a' relationship represents inheritance. For example, 'Car is-a Vehicle' indicates that Car inherits from Vehicle."
+        correctAnswers: [1, 2, 3],
+        points: 4,
+        explanation: "Entities are things about which we collect data, made up of attributes, and can be optional or mandatory."
     },
-
-    // Question 17 - Data Types Matching
     {
         id: 17,
-        type: "matching",
-        question: "Match Java data types with their byte sizes:",
-        prompts: ["int", "short", "double", "char"],
-        answers: ["4 bytes", "2 bytes", "8 bytes", "2 bytes"],
-        correctMatches: {
-            "int": "4 bytes",
-            "short": "2 bytes", 
-            "double": "8 bytes",
-            "char": "2 bytes"
-        },
-        points: 4,
-        explanation: "int = 4 bytes, short = 2 bytes, double = 8 bytes, char = 2 bytes (Unicode characters)"
+        type: "multiple-choice",
+        question: "Which of the following statements are true about an attribute?",
+        options: [
+            "a group of data items",
+            "characteristic of an entity",
+            "maybe be optional or mandatory",
+            "non decomposable unit of data about an entity",
+            "classification of the type of values stored"
+        ],
+        correctAnswers: [1, 2, 3],
+        points: 3,
+        explanation: "Attributes are characteristics of entities, can be optional/mandatory, and are non-decomposable units."
     },
-
-    // Question 18 - Control Structures Matching
     {
         id: 18,
-        type: "matching",
-        question: "Match Java control structures to their usage:",
-        prompts: ["if", "while", "for", "switch"],
-        answers: ["Executes conditionally", "Repeats while condition is true", "Loops with known bounds", "Selects block based on value"],
-        correctMatches: {
-            "if": "Executes conditionally",
-            "while": "Repeats while condition is true",
-            "for": "Loops with known bounds",
-            "switch": "Selects block based on value"
-        },
+        type: "multiple-choice",
+        question: "Which of the following statements are true about a datatype?",
+        options: [
+            "classification of the type of values stored",
+            "helps to defines an attribute",
+            "specifie how data can be used",
+            "a group of data items",
+            "specifie the domain"
+        ],
+        correctAnswers: [0, 1, 2, 4],
         points: 4,
-        explanation: "Each control structure has specific use cases: if for conditions, while for indefinite loops, for for definite loops, switch for multi-way branching."
+        explanation: "Datatypes classify values, define attributes, specify usage, and specify domains."
     },
-
-    // Question 19 - Exception Handling Matching
     {
         id: 19,
-        type: "matching",
-        question: "Match exception handling keywords:",
-        prompts: ["try", "catch", "finally", "throw"],
-        answers: ["Surrounds code that may throw", "Catches specific exceptions", "Executes cleanup code", "Manually throw an exception"],
-        correctMatches: {
-            "try": "Surrounds code that may throw",
-            "catch": "Catches specific exceptions",
-            "finally": "Executes cleanup code",
-            "throw": "Manually throw an exception"
-        },
+        type: "multiple-choice",
+        question: "Which of the following statements are true about relationships?",
+        options: [
+            "link between tables",
+            "match primary keys in parent table to foreign keys in child table",
+            "maybe be optional or mandatory",
+            "require entity, referential and domain integrity",
+            "links attributes in the same table together"
+        ],
+        correctAnswers: [0, 1, 2, 3],
         points: 4,
-        explanation: "Exception handling keywords: try (contains risky code), catch (handles exceptions), finally (cleanup), throw (manually throws exceptions)."
+        explanation: "Relationships link tables via keys, can be optional/mandatory, and require integrity."
     },
-
-    // Question 20 - Inheritance Terms Matching
     {
         id: 20,
         type: "matching",
-        question: "Match inheritance-related terms:",
-        prompts: ["superclass", "subclass", "inheritance", "extends"],
-        answers: ["Class being extended", "Class that extends another", "Gaining features from a class", "Keyword to inherit a class"],
-        correctMatches: {
-            "superclass": "Class being extended",
-            "subclass": "Class that extends another",
-            "inheritance": "Gaining features from a class",
-            "extends": "Keyword to inherit a class"
-        },
+        question: "Match the logical definitions to the physical representations",
+        prompts: ["attribute", "entity", "domain", "tuple"],
+        answers: ["column", "table", "datatype", "row"],
+        correctMatches: {"attribute": "column", "entity": "table", "domain": "datatype", "tuple": "row"},
         points: 4,
-        explanation: "Inheritance terminology: superclass (parent), subclass (child), inheritance (concept), extends (keyword)."
+        explanation: "Logical concepts map to physical implementations in databases."
     },
 
-    // Question 21 - Abstract Class Instantiation
+    // Set 5: Keys and Constraints
     {
         id: 21,
-        type: "single-choice",
-        question: "Can an abstract class be instantiated?",
+        type: "multiple-choice",
+        question: "Which of the following statements are true about a primary key?",
         options: [
-            "True",
-            "False"
+            "a constraint on data values",
+            "a unique identifier",
+            "mandatory value, so cannot take nulls",
+            "field(s) used to uniquely identify a row of data",
+            "only 1 per table",
+            "may have many parts",
+            "may be many in a table"
         ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "False. Abstract classes cannot be instantiated directly. You can only create instances of concrete subclasses."
+        correctAnswers: [0, 1, 2, 3, 4, 5],
+        points: 6,
+        explanation: "Primary keys have all these properties except there can only be one per table."
     },
-
-    // Question 22 - this() Constructor Call
     {
         id: 22,
-        type: "single-choice",
-        question: "The this() call is used only for calling another constructor in the same class.",
+        type: "multiple-choice",
+        question: "Which of the following statements are true about a foreign key?",
         options: [
-            "True",
-            "False"
+            "a constraint on data values",
+            "mandatory value so cannot take nulls",
+            "field(s) in a child table that references a matching primary key field in a parent table",
+            "a secondary key in a parent table",
+            "only 1 per table",
+            "may have many parts",
+            "may be many in a table"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "True. The this() call is used to invoke another constructor within the same class (constructor chaining)."
+        correctAnswers: [0, 2, 5, 6],
+        points: 4,
+        explanation: "Foreign keys are constraints that reference parent tables, can have many parts, and there can be many per table."
     },
-
-    // Question 23 - Multiple Inheritance
     {
         id: 23,
-        type: "single-choice",
-        question: "Can a Java class extend more than one class?",
-        options: [
-            "True",
-            "False"
-        ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "False. Java does not support multiple inheritance of classes. A class can only extend one superclass."
+        type: "matching",
+        question: "Match the constraint to integrity",
+        prompts: ["datatypes", "foreign key", "primary key", "unique constraints"],
+        answers: ["domain integrity", "referential integrity", "entity integrity", "domain integrity"],
+        correctMatches: {"datatypes": "domain integrity", "foreign key": "referential integrity", "primary key": "entity integrity", "unique constraints": "domain integrity"},
+        points: 3,
+        explanation: "Different constraints enforce different types of integrity."
     },
-
-    // Question 24 - Multiple Interface Implementation
     {
         id: 24,
-        type: "single-choice",
-        question: "Can a Java class implement more than one interface?",
+        type: "multiple-choice",
+        question: "Which of the following statements are true about a compound key?",
         options: [
-            "True",
-            "False"
+            "a secondary key in a parent table",
+            "can be a primary key",
+            "can be a foreign key",
+            "a constraint on data values",
+            "a key defined from multiple columns"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "True. A Java class can implement multiple interfaces using comma separation: class MyClass implements Interface1, Interface2."
+        correctAnswers: [1, 2, 3, 4],
+        points: 4,
+        explanation: "Compound keys can serve as primary or foreign keys, are constraints, and use multiple columns."
     },
 
-    // Question 25 - Abstract Class Interface Implementation
+    // Set 6: Cardinality and Relationships
     {
         id: 25,
-        type: "single-choice",
-        question: "Can an abstract class implement multiple interfaces?",
+        type: "multiple-choice",
+        question: "Which of the following statements best describes database design cardinality?",
         options: [
-            "True",
-            "False"
+            "the nature of the relationship",
+            "relationship between entities in terms of occurrences",
+            "identifies whether a relationship involvement is compulsory or not",
+            "represented by solid or broken lines",
+            "represented by crows feet",
+            "indicates the number of instances of an entity in relation to another entity",
+            "captures a hierarchical structure"
         ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "True. An abstract class can implement multiple interfaces, and it's not required to implement all interface methods (concrete subclasses must)."
+        correctAnswers: [1, 5],
+        points: 4,
+        explanation: "Cardinality describes relationships in terms of occurrences and number of instances."
     },
-
-    // Question 26 - Array Sum Calculation
     {
         id: 26,
-        type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\npublic class SumArray {\n    public static void main(String[] args) {\n        int[] data = {2, 4, 6, 8};\n        int total = 0;\n        for (int i = 0; i < data.length; i++) {\n            total += data[i];\n        }\n        System.out.println(total);\n    }\n}\n```\n\nWhat is the output?",
+        type: "multiple-choice",
+        question: "Which of the following statements best describes database optionality?",
         options: [
-            "10",
-            "12", 
-            "20",
-            "24"
+            "the nature of the relationship",
+            "relationship between entities in terms of occurrences",
+            "identifies whether a relationship involvement is compulsory or not",
+            "represented by solid or broken lines",
+            "represented by crows feet",
+            "indicates the number of instances of an entity in relation to another entity",
+            "captures a hierarchical structure"
         ],
-        correctAnswers: [2],
-        points: 1,
-        explanation: "The sum of array elements is: 2 + 4 + 6 + 8 = 20"
+        correctAnswers: [2, 3],
+        points: 3,
+        explanation: "Optionality identifies if relationships are compulsory and is shown by line types."
     },
-
-    // Question 27 - String Length
     {
         id: 27,
-        type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\npublic class StringLength {\n    public static void main(String[] args) {\n        String msg = \"Java Programming\";\n        int len = msg.length();\n        System.out.println(\"Length is \" + len);\n    }\n}\n```\n\nWhat is the output?",
+        type: "multiple-choice",
+        question: "What 3 types of relationship exist in ERM?",
         options: [
-            "Length is 16",
-            "16",
-            "Length is 17",
-            "Length is 15"
+            "1:M",
+            "M:N",
+            "1:1",
+            "1:0",
+            "M:0"
         ],
-        correctAnswers: [3],
-        points: 1,
-        explanation: "The string 'Java Programming' has 15 characters (including the space), so output is 'Length is 15'."
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "The three relationship types are one-to-many, many-to-many, and one-to-one."
     },
-
-    // Question 28 - Break Statement
     {
         id: 28,
         type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\npublic class BreakExample {\n    public static void main(String[] args) {\n        for (int i = 0; i < 5; i++) {\n            if (i == 2) {\n                break;\n            }\n            System.out.println(i);\n        }\n    }\n}\n```\n\nWhat is the output?",
+        question: "What is the only acceptable relationship in ERM?",
         options: [
-            "0\n1",
-            "0\n1\n2",
-            "1\n2",
-            "2\n3"
+            "1:M",
+            "M:N",
+            "1:1",
+            "1:0",
+            "M:0"
         ],
         correctAnswers: [0],
         points: 1,
-        explanation: "The loop prints 0, then 1. When i becomes 2, the break statement terminates the loop before printing 2."
+        explanation: "Only one-to-many relationships are directly implementable in relational databases."
     },
-
-    // Question 29 - Polymorphism Example
     {
         id: 29,
         type: "single-choice",
-        question: "Analyze this code and identify the OOP concept demonstrated:\n\n```java\nabstract class ShapeBase {\n    public abstract void render();\n}\n\nclass Oval extends ShapeBase {\n    public void render() {\n        System.out.println(\"Rendering Oval\");\n    }\n}\n\nclass Hexagon extends ShapeBase {\n    public void render() {\n        System.out.println(\"Rendering Hexagon\");\n    }\n}\n```\n\nWhich OOP concept is demonstrated?",
+        question: "What is a relationship from one entity to itself called?",
         options: [
-            "Polymorphism",
-            "Inheritance",
-            "Encapsulation",
-            "Abstraction"
-        ],
-        correctAnswers: [0],
-        points: 1,
-        explanation: "This demonstrates polymorphism - different classes (Oval, Hexagon) providing different implementations of the same method (render())."
-    },
-
-    // Question 30 - Encapsulation Example
-    {
-        id: 30,
-        type: "single-choice",
-        question: "Analyze this code and identify the OOP principle demonstrated:\n\n```java\npublic class Wallet {\n    private double balance;\n\n    public void deposit(double amt) {\n        balance += amt;\n    }\n\n    public void withdraw(double amt) {\n        if (amt <= balance) {\n            balance -= amt;\n        }\n    }\n}\n```\n\nWhich OOP principle is emphasized?",
-        options: [
-            "Polymorphism",
-            "Abstraction",
-            "Inheritance",
-            "Encapsulation"
+            "optional",
+            "mandatory",
+            "cardinal",
+            "recursive",
+            "degree of freedom"
         ],
         correctAnswers: [3],
         points: 1,
-        explanation: "This demonstrates encapsulation - the balance field is private and accessed only through controlled public methods (deposit, withdraw)."
+        explanation: "A recursive relationship is from an entity to itself."
+    },
+    {
+        id: 30,
+        type: "single-choice",
+        question: "How are M:N relationships resolved?",
+        options: [
+            "decomposed",
+            "consolidated",
+            "they don't need resolving",
+            "ignored"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Many-to-many relationships must be decomposed using a link entity."
     },
 
-    // Additional TCA Systems Design & Development Questions
-    
-    // Question 31 - UML Relationships Theory
+    // Set 7: Normalization
     {
         id: 31,
         type: "multiple-choice",
-        question: "Which of the following correctly describes UML Class Diagram relationships?",
+        question: "Which of these is achieved by normalisation?",
         options: [
-            "Association represents a general relationship between classes",
-            "Aggregation is a 'whole-part' relationship where parts can exist independently",
-            "Composition is a stronger form where parts cannot exist without the whole",
-            "Inheritance represents an 'is-a' relationship between classes",
-            "Association is stronger than composition"
+            "identifies relationships within data",
+            "logically groups data together",
+            "facilitates data maintenance",
+            "speeds up processing"
         ],
-        correctAnswers: [0, 1, 2, 3],
-        points: 4,
-        explanation: "Association is a general relationship, Aggregation is 'has-a' with independent parts, Composition is 'contains-a' with dependent parts, and Inheritance is 'is-a' relationship."
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Normalization identifies relationships, groups data logically, and facilitates maintenance."
     },
-
-    // Question 32 - Access Modifiers
     {
         id: 32,
-        type: "matching",
-        question: "Match the access modifiers with their appropriate use cases:",
-        prompts: ["public static final", "protected", "private", "public"],
-        answers: ["Class constant accessible anywhere", "Method only child classes should access", "Field only accessible within its own class", "Method accessible from any class"],
-        correctMatches: {
-            "public static final": "Class constant accessible anywhere",
-            "protected": "Method only child classes should access", 
-            "private": "Field only accessible within its own class",
-            "public": "Method accessible from any class"
-        },
-        points: 4,
-        explanation: "Access modifiers control visibility: public (everywhere), protected (subclasses), private (same class only), public static final (constants)."
+        type: "multiple-choice",
+        question: "What anomalies does normalisation aim to address?",
+        options: [
+            "update",
+            "insert",
+            "delete",
+            "create"
+        ],
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Normalization addresses update, insert, and delete anomalies."
     },
-
-    // Question 33 - Constructor Output
     {
         id: 33,
-        type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\npublic class MyClass {\n    int x;\n    public MyClass() {\n        x = 5;\n    }\n}\n\npublic class Test {\n    public static void main(String[] args) {\n        MyClass obj = new MyClass();\n        System.out.println(obj.x);\n    }\n}\n```\n\nWhat is the output?",
+        type: "multiple-choice",
+        question: "Which of these are reasons to normalise data?",
         options: [
-            "Compilation error",
-            "5",
-            "0", 
-            "Runtime error"
+            "conform to Codd's 3 rules",
+            "to fit in",
+            "to improve efficiency",
+            "reduce NULLs",
+            "reduce redundancy",
+            "limit loss of data"
         ],
-        correctAnswers: [1],
-        points: 1,
-        explanation: "The constructor sets x to 5, so when obj.x is printed, it outputs 5."
+        correctAnswers: [3, 4, 5],
+        points: 3,
+        explanation: "Normalization reduces NULLs and redundancy, and limits data loss."
     },
-
-    // Question 34 - Getter Method
     {
         id: 34,
-        type: "single-choice",
-        question: "Analyze this code and determine what the getModel() method returns:\n\n```java\npublic class Car {\n    private String make;\n    private String model;\n    \n    public Car(String make, String model) {\n        this.make = make;\n        this.model = model;\n    }\n    \n    public String getModel() {\n        return model;\n    }\n}\n```\n\nWhat does the getModel() method return?",
-        options: [
-            "The make of the car",
-            "Both the make and model of the car", 
-            "The model of the car",
-            "Nothing, it's a constructor"
-        ],
-        correctAnswers: [2],
+        type: "fill-blank",
+        question: "What does RDA stand for?",
+        correctAnswer: "Relational Data Analysis",
         points: 1,
-        explanation: "The getModel() method returns the value of the private model field."
+        explanation: "RDA stands for Relational Data Analysis."
     },
-
-    // Question 35 - OOP Process Definition
     {
         id: 35,
-        type: "single-choice",
-        question: "In Java, the process of creating a new class by reusing the properties and behaviors of an existing class is known as:",
-        options: [
-            "inheritance",
-            "polymorphism",
-            "encapsulation",
-            "abstraction"
-        ],
-        correctAnswers: [0],
+        type: "fill-blank",
+        question: "What directional approach is normalisation?",
+        correctAnswer: "Bottom up",
         points: 1,
-        explanation: "Inheritance is the OOP concept that allows creating new classes by reusing properties and behaviors from existing classes."
+        explanation: "Normalization is a bottom-up approach to database design."
     },
 
-    // Question 36 - Super Keyword Purpose
+    // Set 8: Normal Forms
     {
         id: 36,
         type: "single-choice",
-        question: "In Java, what is the primary purpose of the super keyword?",
+        question: "What is UNF form concerned with?",
         options: [
-            "To declare a variable",
-            "To create a new instance of a class",
-            "To call the superclass constructor or methods",
-            "To access a static method"
+            "identifying data items",
+            "separating repeating and not repeating data",
+            "reviewing relations with compound keys",
+            "reviewing relations with more than 1 non key item"
         ],
-        correctAnswers: [2],
+        correctAnswers: [0],
         points: 1,
-        explanation: "The super keyword is primarily used to call superclass constructors or methods, and to access superclass members."
+        explanation: "UNF (Unnormalized Form) is concerned with identifying data items."
     },
-
-    // Question 37 - Object Passing
     {
         id: 37,
         type: "single-choice",
-        question: "In Java, all objects are passed by reference to methods, allowing the modification of the original object.",
+        question: "What is 1NF form concerned with?",
         options: [
-            "True",
-            "False"
+            "identifying data items",
+            "separating repeating and not repeating data",
+            "reviewing relations with compound keys",
+            "reviewing relations with more than 1 non key item"
         ],
         correctAnswers: [1],
         points: 1,
-        explanation: "False. Java passes object references by value. While you can modify the object through the reference, you cannot change what the original reference points to."
+        explanation: "1NF separates repeating and non-repeating data groups."
     },
-
-    // Question 38 - Conditional Construct
     {
         id: 38,
         type: "single-choice",
-        question: "You need to ensure that a specific block of code is executed only if a certain condition is met. Which Java construct should you use?",
+        question: "What is 2NF form concerned with?",
         options: [
-            "switch case",
-            "for loop",
-            "if statement",
-            "while loop"
+            "identifying data items",
+            "separating repeating and not repeating data",
+            "reviewing relations with compound keys",
+            "reviewing relations with more than 1 non key item"
         ],
         correctAnswers: [2],
         points: 1,
-        explanation: "An if statement is used to execute code conditionally based on whether a condition is true or false."
+        explanation: "2NF reviews relations with compound keys for partial dependencies."
     },
-
-    // Question 39 - Multiple Inheritance
     {
         id: 39,
         type: "single-choice",
-        question: "Java supports multiple inheritance, allowing a class to inherit from multiple classes.",
+        question: "What is 3NF form concerned with?",
         options: [
-            "True",
-            "False"
+            "identifying data items",
+            "separating repeating and not repeating data",
+            "reviewing relations with compound keys",
+            "reviewing relations with more than 1 non key item"
         ],
-        correctAnswers: [1],
+        correctAnswers: [3],
         points: 1,
-        explanation: "False. Java does not support multiple inheritance of classes. A class can only extend one superclass, though it can implement multiple interfaces."
+        explanation: "3NF reviews relations with multiple non-key items for transitive dependencies."
     },
-
-    // Question 40 - Encapsulation Access
     {
         id: 40,
         type: "fill-blank",
-        question: "A class's private members are typically accessed through public methods known as __________.",
-        correctAnswer: "getters and setters",
+        question: "What constraint is automatically set on defined primary keys?",
+        correctAnswer: "NOT NULL",
         points: 1,
-        explanation: "Getters and setters (also called accessors and mutators) are public methods used to access and modify private class members while maintaining encapsulation."
+        explanation: "Primary keys automatically have NOT NULL constraint applied."
     },
 
-    // Question 41 - Loop for Factorial
+    // Additional Database Questions
     {
         id: 41,
-        type: "single-choice", 
-        question: "You need to implement a method that calculates the factorial of a given positive integer. Which loop structure would be most appropriate for this task?",
+        type: "single-choice",
+        question: "Which of these statements are true about integrity?",
         options: [
-            "for loop",
-            "do-while loop",
-            "switch statement",
-            "while loop"
+            "Represented by 2 dimensional tables",
+            "Has a set of tuples",
+            "Has an unordered set of attribute values",
+            "Is a link between tables",
+            "Governs operations on the data and structures of a relational database",
+            "Have the same columns"
+        ],
+        correctAnswers: [4],
+        points: 1,
+        explanation: "Integrity governs operations on data and structures of a relational database."
+    },
+    {
+        id: 42,
+        type: "single-choice",
+        question: "Which company developed the first commercial relational database?",
+        options: [
+            "Oracle",
+            "IBM",
+            "Microsoft",
+            "Sybase",
+            "HP"
         ],
         correctAnswers: [0],
         points: 1,
-        explanation: "A for loop is most appropriate for factorial calculation because you know the exact number of iterations needed (from 1 to n)."
+        explanation: "Oracle developed the first commercial relational database."
     },
-
-    // Question 42 - Abstract Class vs Interface
-    {
-        id: 42,
-        type: "multiple-choice",
-        question: "What are the key differences between abstract classes and interfaces in Java?",
-        options: [
-            "Abstract classes can have constructors, interfaces cannot",
-            "Abstract classes can have concrete methods, interfaces can only have abstract methods (pre-Java 8)",
-            "A class can extend only one abstract class but implement multiple interfaces",
-            "Abstract classes can have instance variables, interfaces can only have constants",
-            "Interfaces support multiple inheritance, abstract classes do not"
-        ],
-        correctAnswers: [0, 1, 2, 3, 4],
-        points: 5,
-        explanation: "Abstract classes are more flexible with constructors, concrete methods, and instance variables, while interfaces focus on contracts and support multiple inheritance."
-    },
-
-    // Question 43 - Polymorphism Example
     {
         id: 43,
         type: "single-choice",
-        question: "Analyze this code and determine the output:\n\n```java\npublic class Parent {\n    public void display() {\n        System.out.println(\"Parent display\");\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    public void display() {\n        System.out.println(\"Child display\");\n    }\n    \n    public void show() {\n        super.display();\n        this.display();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.show();\n    }\n}\n```\n\nWhat is the output?",
+        question: "What is data redundancy?",
         options: [
-            "Parent display\nChild display",
-            "Child display\nParent display",
-            "Parent display\nParent display",
-            "Child display\nChild display"
-        ],
-        correctAnswers: [0],
-        points: 2,
-        explanation: "The show() method first calls super.display() which prints 'Parent display', then this.display() which prints 'Child display'."
-    },
-
-    // Question 44 - Encapsulation Benefits
-    {
-        id: 44,
-        type: "multiple-choice",
-        question: "What are the benefits of encapsulation in Object-Oriented Programming?",
-        options: [
-            "Data hiding and security",
-            "Controlled access to class members",
-            "Code maintainability and flexibility",
-            "Reduced complexity and better organization",
-            "Improved performance"
-        ],
-        correctAnswers: [0, 1, 2, 3],
-        points: 4,
-        explanation: "Encapsulation provides data hiding, controlled access, maintainability, and better organization. Performance improvement is not a direct benefit."
-    },
-
-    // Question 45 - UML Class Diagram Design
-    {
-        id: 45,
-        type: "single-choice",
-        question: "In a university enrollment system, a Student can enroll in multiple Courses, and each Course can have multiple Students. What type of relationship should be shown in the UML class diagram?",
-        options: [
-            "One-to-One Association",
-            "Many-to-Many Association", 
-            "Composition",
-            "Inheritance"
-        ],
-        correctAnswers: [1],
-        points: 2,
-        explanation: "Since students can enroll in multiple courses and courses can have multiple students, this represents a Many-to-Many Association relationship."
-    },
-
-    // Question 46 - Vehicle Hierarchy Implementation
-    {
-        id: 46,
-        type: "single-choice",
-        question: "Given this Vehicle hierarchy, determine the maximum speed:\n\n```java\npublic abstract class Vehicle {\n    public void drive() {\n        System.out.println(\"The vehicle is driving\");\n    }\n}\n\npublic class Car extends Vehicle {\n    private int horsepower;\n    \n    public Car(int horsepower) {\n        this.horsepower = horsepower;\n    }\n    \n    public int maxSpeed() {\n        return horsepower * 2;\n    }\n}\n```\n\nIf you create a Car with 150 horsepower, what would be its maximum speed?",
-        options: [
-            "150 mph",
-            "300 mph",
-            "75 mph", 
-            "200 mph"
+            "When data is no longer needed",
+            "Unnecessary duplication of data",
+            "When old data is removed",
+            "When there is too much data",
+            "When there is not enough data"
         ],
         correctAnswers: [1],
         points: 1,
-        explanation: "The maxSpeed() method returns horsepower * 2, so 150 * 2 = 300 mph."
+        explanation: "Data redundancy is unnecessary duplication of data."
     },
-
-    // Question 47 - ArrayList Employee Management
+    {
+        id: 44,
+        type: "single-choice",
+        question: "What best describes the main components of a table specification?",
+        options: [
+            "attributes, domains, keys and integrity",
+            "entities, relationships, cardinality",
+            "tables, columns and rows",
+            "attributes, data and cardinality",
+            "keys and integrity"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Table specifications include attributes, domains, keys and integrity."
+    },
+    {
+        id: 45,
+        type: "multiple-choice",
+        question: "What is a universe of discourse?",
+        options: [
+            "the area under consideration",
+            "the datatypes",
+            "a type of integrity",
+            "the database",
+            "the area of the real world relevant to the database design"
+        ],
+        correctAnswers: [0, 4],
+        points: 2,
+        explanation: "Universe of discourse is the area under consideration and the real world area relevant to database design."
+    },
+    {
+        id: 46,
+        type: "single-choice",
+        question: "Which of the following is the best example of an entity name?",
+        options: [
+            "student",
+            "students",
+            "student_id",
+            "student_details",
+            "student_name"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Entity names should be singular nouns, so 'student' is correct."
+    },
     {
         id: 47,
-        type: "single-choice",
-        question: "Consider this Employee class and ArrayList usage:\n\n```java\nclass Employee {\n    private String name;\n    private double salary;\n    \n    public Employee(String name, double salary) {\n        this.name = name;\n        this.salary = salary;\n    }\n    \n    public double getSalary() {\n        return salary;\n    }\n}\n```\n\nIf you add employees with salaries: $45000, $55000, $60000, $48000, $65000 to an ArrayList and calculate the total, what would be the result?",
+        type: "multiple-choice",
+        question: "Which datatypes exist in Oracle SQL?",
         options: [
-            "$263000",
-            "$273000",
-            "$253000",
-            "$283000"
+            "VARCHAR2",
+            "CHAR",
+            "NUMBER",
+            "DATE",
+            "TEXT",
+            "AUTONUMBER"
         ],
-        correctAnswers: [1],
-        points: 2,
-        explanation: "Total salary = 45000 + 55000 + 60000 + 48000 + 65000 = $273000"
+        correctAnswers: [0, 1, 2, 3],
+        points: 4,
+        explanation: "Oracle SQL supports VARCHAR2, CHAR, NUMBER, and DATE datatypes."
     },
-
-    // Question 48 - Software Development Lifecycle
     {
         id: 48,
-        type: "multiple-choice",
-        question: "Which of the following are key phases in the Software Development Life Cycle (SDLC)?",
+        type: "single-choice",
+        question: "Which 2 attributes are matched in a relationship?",
         options: [
-            "Requirements gathering and analysis",
-            "System design and architecture",
-            "Implementation and coding",
-            "Testing and debugging",
-            "Deployment and maintenance",
-            "Hardware selection"
+            "primary key and foreign key",
+            "primary key and unique item",
+            "primary key and secondary key",
+            "foreign key and attribute"
         ],
-        correctAnswers: [0, 1, 2, 3, 4],
-        points: 5,
-        explanation: "The main SDLC phases include requirements gathering, design, implementation, testing, deployment, and maintenance. Hardware selection is not a core SDLC phase."
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Relationships match primary keys with foreign keys."
     },
-
-    // Question 49 - Waterfall vs Agile
     {
         id: 49,
         type: "single-choice",
-        question: "What is the main difference between Waterfall and Agile development methodologies?",
+        question: "How are 1:1 relationships resolved?",
         options: [
-            "Waterfall allows changes during development, Agile doesn't",
-            "Waterfall is iterative, Agile is sequential",
-            "Waterfall is sequential with phases, Agile is iterative with sprints",
-            "There is no significant difference"
+            "decomposed",
+            "consolidated",
+            "they don't need resolving",
+            "ignored"
         ],
-        correctAnswers: [2],
-        points: 2,
-        explanation: "Waterfall follows a sequential approach with distinct phases, while Agile uses iterative development with short sprints allowing for continuous feedback and adaptation."
+        correctAnswers: [1],
+        points: 1,
+        explanation: "One-to-one relationships are typically consolidated into a single table."
     },
-
-    // Question 50 - UML Diagram Types
     {
         id: 50,
         type: "multiple-choice",
-        question: "Which of the following are types of UML diagrams used in systems design?",
+        question: "Which of the following statements are true about decomposition?",
         options: [
-            "Class diagrams",
-            "Use case diagrams",
-            "Sequence diagrams",
-            "Entity relationship diagrams",
-            "Activity diagrams",
-            "State machine diagrams"
+            "applied to resolve complex relationships",
+            "a relationship that can not be processed in a relational database",
+            "requires an additional entity",
+            "applies to M:N relationships",
+            "detail of data is lost",
+            "requires an additional relationship"
         ],
-        correctAnswers: [0, 1, 2, 4, 5],
-        points: 5,
-        explanation: "Class, use case, sequence, activity, and state machine diagrams are all UML diagram types. Entity relationship diagrams are used in database design but are not UML diagrams."
+        correctAnswers: [0, 2, 3, 5],
+        points: 4,
+        explanation: "Decomposition resolves complex M:N relationships by adding entities and relationships."
     },
-
-    // Question 51 - System Design Principles
     {
         id: 51,
-        type: "multiple-choice",
-        question: "Which are important principles of good system design?",
+        type: "single-choice",
+        question: "Which of the following statements are true about complexity?",
         options: [
-            "High cohesion within modules",
-            "Low coupling between modules",
-            "Separation of concerns",
-            "Single responsibility principle",
-            "High complexity",
-            "Code reusability"
+            "applied to resolve complex relationships",
+            "a relationship that can not be processed in a relational database",
+            "requires an additional entity",
+            "applies to M:N relationships",
+            "detail of data is lost",
+            "requires an additional relationship"
         ],
-        correctAnswers: [0, 1, 2, 3, 5],
-        points: 5,
-        explanation: "Good system design emphasizes high cohesion, low coupling, separation of concerns, single responsibility, and reusability. High complexity should be avoided."
+        correctAnswers: [1],
+        points: 1,
+        explanation: "Complexity refers to relationships that cannot be processed in relational databases."
     },
-
-    // Question 52 - Java Garbage Collection
     {
         id: 52,
         type: "single-choice",
-        question: "What is the primary purpose of Java's garbage collection mechanism?",
+        question: "How do you resolve an M:N relationship?",
         options: [
-            "To delete source code files",
-            "To automatically manage memory by freeing unused objects",
-            "To compile Java code",
-            "To optimize method calls"
+            "decompose it",
+            "add an additional entity",
+            "post keys to link entity",
+            "consolidate it",
+            "add parents"
         ],
-        correctAnswers: [1],
-        points: 2,
-        explanation: "Java's garbage collection automatically manages memory by identifying and freeing objects that are no longer referenced, preventing memory leaks."
+        correctAnswers: [0],
+        points: 1,
+        explanation: "M:N relationships are resolved by decomposing them."
     },
-
-    // Question 53 - Method Overloading vs Overriding
     {
         id: 53,
-        type: "matching",
-        question: "Match the concept with its correct description:",
-        prompts: [
-            "Method Overloading",
-            "Method Overriding",
-            "Compile-time polymorphism",
-            "Runtime polymorphism"
+        type: "single-choice",
+        question: "Which 2 attributes are matched in a relationship?",
+        options: [
+            "primary key in the parent table and foreign key in the child table",
+            "primary key in the parent table and foreign key in the parent table",
+            "primary key in the parent table and secondary key in the parent table",
+            "primary key in the parent table and another attribute parent table",
+            "primary key in the child table and foreign key in the child table",
+            "foreign key in the child table and foreign key in the parent table"
         ],
-        answers: [
-            "Multiple methods with same name but different parameters",
-            "Child class provides specific implementation of parent method",
-            "Also known as method overloading",
-            "Also known as method overriding"
-        ],
-        correctMatches: {
-            "Method Overloading": "Multiple methods with same name but different parameters",
-            "Method Overriding": "Child class provides specific implementation of parent method",
-            "Compile-time polymorphism": "Also known as method overloading",
-            "Runtime polymorphism": "Also known as method overriding"
-        },
-        points: 4,
-        explanation: "Method overloading provides multiple methods with the same name but different parameters (compile-time polymorphism), while method overriding allows child classes to provide specific implementations of parent methods (runtime polymorphism)."
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Relationships match primary keys in parent tables with foreign keys in child tables."
     },
-
-    // Question 54 - Testing Types
     {
         id: 54,
-        type: "multiple-choice",
-        question: "Which of the following are common types of software testing?",
+        type: "single-choice",
+        question: "What are foreign keys in a link entity?",
         options: [
-            "Unit testing",
-            "Integration testing",
-            "System testing",
-            "Acceptance testing",
-            "Compilation testing",
-            "Performance testing"
+            "primary keys from the decomposed entities",
+            "foreign key from the decomposed entities",
+            "can be any attribute",
+            "primary and foreign keys from the decomposed entities"
         ],
-        correctAnswers: [0, 1, 2, 3, 5],
-        points: 5,
-        explanation: "Unit, integration, system, acceptance, and performance testing are all common testing types. Compilation testing is not a standard testing category."
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Foreign keys in link entities are the primary keys from the decomposed entities."
     },
-
-    // Question 55 - Java Package System
     {
         id: 55,
         type: "single-choice",
-        question: "Analyze this code and determine the purpose of the package declaration:\n\n```java\npackage com.company.project;\nimport java.util.ArrayList;\n\npublic class DataManager {\n    private ArrayList<String> data;\n    \n    public DataManager() {\n        data = new ArrayList<>();\n    }\n}\n```\n\nWhat is the purpose of the package declaration in this code?",
+        question: "What do 'crows feet' represent in a ERD?",
         options: [
-            "To import external libraries",
-            "To organize classes into namespaces and prevent naming conflicts",
-            "To define the class constructor",
-            "To specify the class access level"
+            "foreign keys",
+            "primary keys",
+            "attributes",
+            "datatypes",
+            "parents"
         ],
-        correctAnswers: [1],
-        points: 2,
-        explanation: "The package declaration organizes classes into logical namespaces, preventing naming conflicts and providing a hierarchical structure for code organization."
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Crows feet represent the 'many' side of relationships, indicating foreign keys."
     },
 
-    // Question 56 - Design Patterns Introduction
+    // Integrity and Constraints
     {
         id: 56,
-        type: "single-choice",
-        question: "What are design patterns in software development?",
+        type: "multiple-choice",
+        question: "Which methods can be applied maintaining referential integrity?",
         options: [
-            "Visual layouts for user interfaces",
-            "Reusable solutions to common software design problems",
-            "Specific coding syntax rules",
-            "Database table structures"
+            "cascade",
+            "restrict",
+            "nullify",
+            "insert",
+            "update"
         ],
-        correctAnswers: [1],
-        points: 2,
-        explanation: "Design patterns are reusable solutions to commonly occurring problems in software design, providing templates for how to solve problems in specific situations."
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Referential integrity can be maintained using cascade, restrict, and nullify methods."
     },
-
-    // Question 57 - Java Array vs ArrayList
     {
         id: 57,
-        type: "multiple-choice",
-        question: "What are the key differences between arrays and ArrayList in Java?",
+        type: "single-choice",
+        question: "Which 2 columns are referenced in a foreign key constraint?",
         options: [
-            "Arrays have fixed size, ArrayList is dynamic",
-            "Arrays can store primitives, ArrayList stores objects",
-            "ArrayList provides built-in methods like add(), remove()",
-            "Arrays have better performance for accessing elements",
-            "ArrayList requires import statement",
-            "Arrays are objects, ArrayList are primitives"
+            "primary key in the parent table and foreign key in the child table",
+            "primary key in the parent table and foreign key in the parent table",
+            "primary key in the parent table and secondary key in the parent table",
+            "primary key in the parent table and another attribute parent table",
+            "primary key in the child table and foreign key in the child table",
+            "foreign key in the child table and foreign key in the parent table"
         ],
-        correctAnswers: [0, 1, 2, 3, 4],
-        points: 5,
-        explanation: "Arrays have fixed size while ArrayList is dynamic, arrays can store primitives directly while ArrayList stores objects, ArrayList provides utility methods, arrays have better access performance, and ArrayList requires import. The last option is incorrect - both are objects."
+        correctAnswers: [0],
+        points: 1,
+        explanation: "Foreign key constraints reference primary keys in parent tables and foreign keys in child tables."
     },
-
-    // Question 58 - System Architecture Layers
     {
         id: 58,
-        type: "single-choice",
-        question: "In a typical 3-tier architecture, what are the three main layers?",
+        type: "multiple-choice",
+        question: "When is entity integrity checked?",
         options: [
-            "Input, Process, Output",
-            "Client, Server, Database",
-            "Presentation, Business Logic, Data Access",
-            "Frontend, Backend, Storage"
+            "on insert",
+            "on update",
+            "on delete",
+            "on dasher"
         ],
-        correctAnswers: [2],
+        correctAnswers: [0, 1],
         points: 2,
-        explanation: "The 3-tier architecture consists of Presentation layer (user interface), Business Logic layer (application processing), and Data Access layer (database interaction)."
+        explanation: "Entity integrity is checked on insert and update operations."
     },
-
-    // Question 59 - Version Control Concepts
     {
         id: 59,
         type: "multiple-choice",
-        question: "Which are important concepts in version control systems?",
+        question: "When is referential integrity checked?",
         options: [
-            "Repository (repo)",
-            "Commit",
-            "Branch",
-            "Merge",
-            "Rollback",
-            "Compilation"
+            "on insert",
+            "on update",
+            "on delete",
+            "on dancer"
         ],
-        correctAnswers: [0, 1, 2, 3, 4],
-        points: 5,
-        explanation: "Repository, commit, branch, merge, and rollback are all fundamental version control concepts. Compilation is related to building software, not version control."
+        correctAnswers: [0, 1, 2],
+        points: 3,
+        explanation: "Referential integrity is checked on insert, update, and delete operations."
     },
-
-    // Question 60 - Java Static Keyword
     {
         id: 60,
-        type: "single-choice",
-        question: "Analyze this code and determine how to call the add method:\n\n```java\npublic class MathUtils {\n    public static final double PI = 3.14159;\n    \n    public static int add(int a, int b) {\n        return a + b;\n    }\n}\n```\n\nHow would you call the add method?",
+        type: "multiple-choice",
+        question: "When is domain integrity checked?",
         options: [
-            "MathUtils obj = new MathUtils(); obj.add(5, 3);",
-            "MathUtils.add(5, 3);",
-            "add(5, 3);",
-            "new MathUtils().add(5, 3);"
+            "on insert",
+            "on update",
+            "on delete",
+            "on prancer"
         ],
-        correctAnswers: [1],
+        correctAnswers: [0, 1],
         points: 2,
-        explanation: "Static methods belong to the class rather than instances, so they are called using the class name directly: MathUtils.add(5, 3)."
+        explanation: "Domain integrity is checked on insert and update operations."
     },
-
-    // Question 61 - Array Bounds Error Debug
     {
         id: 61,
         type: "single-choice",
-        question: "Analyze this code and identify the issue:\n\n```java\nimport java.util.Arrays;\n\npublic class SortApp {\n    public static void main(String[] args) {\n        int[] nums = {8, 4, 6, 2};\n        Arrays.sort(nums);\n        for (int i = 0; i <= nums.length; i++) {\n            System.out.println(nums[i]);\n        }\n    }\n}\n```\n\nWhat is the issue and how to fix it?",
+        question: "Which integrity is related to primary keys?",
         options: [
-            "Loop condition should be i < nums.length instead of i <= nums.length",
-            "Arrays.sort() method doesn't exist",
-            "Missing import statement for System class",
-            "Array declaration syntax is incorrect"
+            "entity integrity",
+            "referential integrity",
+            "domain integrity",
+            "relationship integrity",
+            "datatype integrity"
         ],
         correctAnswers: [0],
+        points: 1,
+        explanation: "Entity integrity is related to primary keys."
+    },
+    {
+        id: 62,
+        type: "single-choice",
+        question: "Which integrity is related to foreign keys?",
+        options: [
+            "entity integrity",
+            "referential integrity",
+            "domain integrity",
+            "relationship integrity",
+            "datatype integrity"
+        ],
+        correctAnswers: [1],
+        points: 1,
+        explanation: "Referential integrity is related to foreign keys."
+    },
+    {
+        id: 63,
+        type: "single-choice",
+        question: "Which integrity is related to data?",
+        options: [
+            "entity integrity",
+            "referential integrity",
+            "domain integrity",
+            "relationship integrity",
+            "datatype integrity"
+        ],
+        correctAnswers: [2],
+        points: 1,
+        explanation: "Domain integrity is related to data validation."
+    },
+    {
+        id: 64,
+        type: "single-choice",
+        question: "Which key word is used in SQL to identify the parent table and primary key in a foreign key constraint?",
+        options: [
+            "REFERENCES",
+            "PARENT",
+            "CONSTRAINT",
+            "KEY"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "REFERENCES keyword identifies the parent table and primary key in foreign key constraints."
+    },
+
+    // More Normalization Questions
+    {
+        id: 65,
+        type: "single-choice",
+        question: "What does normalisation not identify?",
+        options: [
+            "entity integrity",
+            "referential integrity",
+            "domain integrity",
+            "optionality",
+            "cardinality"
+        ],
+        correctAnswers: [3, 4],
+        points: 2,
+        explanation: "Normalization does not identify optionality and cardinality."
+    },
+    {
+        id: 66,
+        type: "multiple-choice",
+        question: "What disadvantages are there to normalisation?",
+        options: [
+            "retrieving data can be slow",
+            "can be impractical for large data sets",
+            "processing relationships can be complex",
+            "data is repeated",
+            "data is lost"
+        ],
+        correctAnswers: [0, 1, 2],
         points: 3,
-        explanation: "The issue is ArrayIndexOutOfBoundsException. The loop condition 'i <= nums.length' tries to access index 4 in an array of length 4 (valid indices 0-3). Fix: change to 'i < nums.length'."
+        explanation: "Normalization can slow retrieval, be impractical for large datasets, and create complex processing."
+    },
+    {
+        id: 67,
+        type: "single-choice",
+        question: "What level normal form is appropriate for a practical database?",
+        options: [
+            "UNF",
+            "BCNF",
+            "2NF",
+            "3NF"
+        ],
+        correctAnswers: [3],
+        points: 1,
+        explanation: "3NF is generally considered appropriate for practical databases."
+    },
+    {
+        id: 68,
+        type: "single-choice",
+        question: "Which of these best represents a NULL value?",
+        options: [
+            "blank",
+            "zero",
+            "0",
+            "negative"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "A blank (empty) field best represents a NULL value."
+    },
+    {
+        id: 69,
+        type: "fill-blank",
+        question: "What is the single semantic concept of normalisation?",
+        correctAnswer: "Functional Dependency",
+        points: 1,
+        explanation: "Functional Dependency is the single semantic concept underlying normalization."
+    },
+    {
+        id: 70,
+        type: "single-choice",
+        question: "What is the aim of 3NF?",
+        options: [
+            "removing mutually dependent non-key items",
+            "ensuring non transitively dependent non-key items",
+            "ensure all non key items depend on the whole key",
+            "ensure all non key items depend on part of the key"
+        ],
+        correctAnswers: [1],
+        points: 1,
+        explanation: "3NF aims to ensure non-key items are not transitively dependent."
+    },
+    {
+        id: 71,
+        type: "single-choice",
+        question: "What is the aim of 2NF?",
+        options: [
+            "removing mutually dependent non-key items",
+            "ensuring non transitively dependent non-key items",
+            "ensure all non key items depend on the whole key",
+            "ensure all non key items depend on part of the key"
+        ],
+        correctAnswers: [2],
+        points: 1,
+        explanation: "2NF ensures all non-key items depend on the whole key."
+    },
+    {
+        id: 72,
+        type: "single-choice",
+        question: "What does a relation represent in the database?",
+        options: [
+            "table",
+            "attribute",
+            "relationship",
+            "ERD"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "A relation represents a table in the database."
+    },
+    {
+        id: 73,
+        type: "single-choice",
+        question: "What does a data item represent in the database?",
+        options: [
+            "table",
+            "attribute",
+            "relationship",
+            "ERD"
+        ],
+        correctAnswers: [1],
+        points: 1,
+        explanation: "A data item represents an attribute in the database."
+    },
+    {
+        id: 74,
+        type: "single-choice",
+        question: "What does a foreign key represent in the database?",
+        options: [
+            "table",
+            "attribute",
+            "relationship",
+            "ERD"
+        ],
+        correctAnswers: [2],
+        points: 1,
+        explanation: "A foreign key represents a relationship in the database."
+    },
+    {
+        id: 75,
+        type: "single-choice",
+        question: "What is the end result of normalisation?",
+        options: [
+            "table",
+            "attribute",
+            "relationship",
+            "ERD"
+        ],
+        correctAnswers: [0],
+        points: 1,
+        explanation: "The end result of normalization is properly structured tables."
     }
 ];
 

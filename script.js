@@ -1,18 +1,14 @@
-// Java Programming TCA Exam Application
-class JavaExam {
+// Database Exam Application
+class DatabaseExam {
     constructor() {
         this.examQuestions = [];
         this.currentQuestionIndex = 0;
         this.userAnswers = new Map();
-        this.timeLimit = 45 * 60; // 45 minutes in seconds
+        this.timeLimit = 30 * 60; // 30 minutes in seconds
         this.timeRemaining = this.timeLimit;
         this.timerInterval = null;
         this.examStartTime = null;
         this.examEndTime = null;
-        
-        // Matching question state
-        this.currentMatchingQuestion = null;
-        this.selectedPrompt = null;
         
         this.init();
     }
@@ -42,20 +38,6 @@ class JavaExam {
         // Modal events
         document.getElementById('modal-cancel').addEventListener('click', () => this.hideModal());
         document.getElementById('modal-confirm').addEventListener('click', () => this.confirmModalAction());
-        
-        // Special styling for 20 questions
-        document.getElementById('question-count').addEventListener('change', (e) => {
-            if (e.target.value === '20') {
-                document.body.classList.add('questions-20');
-            } else {
-                document.body.classList.remove('questions-20');
-            }
-        });
-        
-        // Set initial state if 20 is selected
-        if (document.getElementById('question-count').value === '20') {
-            document.body.classList.add('questions-20');
-        }
     }
     
     showStartScreen() {
@@ -178,8 +160,8 @@ class JavaExam {
         document.querySelector('.question-type').textContent = this.formatQuestionType(question.type);
         document.querySelector('.question-points').textContent = `${question.points} point${question.points !== 1 ? 's' : ''}`;
         
-        // Update question text and handle code blocks
-        this.displayQuestionText(question);
+        // Update question text
+        document.getElementById('question-text').textContent = question.question;
         
         // Clear previous options
         document.getElementById('question-options').innerHTML = '';
@@ -197,36 +179,6 @@ class JavaExam {
         // Update progress bar
         const progressPercent = ((this.currentQuestionIndex + 1) / this.examQuestions.length) * 100;
         document.querySelector('.progress-fill').style.width = `${progressPercent}%`;
-    }
-    
-    displayQuestionText(question) {
-        const questionText = question.question;
-        const codeBlockRegex = /```[\s\S]*?```|`[^`]*`/g;
-        const hasCodeBlock = codeBlockRegex.test(questionText);
-        
-        if (hasCodeBlock) {
-            // Separate question text and code
-            const parts = questionText.split(codeBlockRegex);
-            const codes = questionText.match(codeBlockRegex) || [];
-            
-            let displayText = parts[0];
-            if (codes.length > 0) {
-                // Show the code block
-                document.getElementById('code-block').style.display = 'block';
-                const codeContent = codes[0].replace(/```/g, '').trim();
-                document.getElementById('code-content').textContent = codeContent;
-                
-                // Add the rest of the question text
-                if (parts[1]) {
-                    displayText += parts[1];
-                }
-            }
-            
-            document.getElementById('question-text').textContent = displayText;
-        } else {
-            document.getElementById('question-text').textContent = questionText;
-            document.getElementById('code-block').style.display = 'none';
-        }
     }
     
     formatQuestionType(type) {
@@ -271,7 +223,7 @@ class JavaExam {
             optionDiv.innerHTML = `
                 <input type="radio" name="q${question.id}" value="${index}" 
                        ${isSelected ? 'checked' : ''}>
-                <label>${this.formatOptionText(option)}</label>
+                <label>${option}</label>
             `;
             
             // Make entire option clickable - set after innerHTML
@@ -307,7 +259,7 @@ class JavaExam {
             optionDiv.innerHTML = `
                 <input type="checkbox" name="q${question.id}" value="${index}" 
                        ${isSelected ? 'checked' : ''}>
-                <label>${this.formatOptionText(option)}</label>
+                <label>${option}</label>
             `;
             
             // Make entire option clickable - set after innerHTML
@@ -320,14 +272,6 @@ class JavaExam {
             
             container.appendChild(optionDiv);
         });
-    }
-    
-    formatOptionText(text) {
-        // Handle code snippets in options
-        if (text.includes('class ') || text.includes('public ') || text.includes('System.out')) {
-            return `<code>${text}</code>`;
-        }
-        return text;
     }
     
     displayFillBlankOption(question) {
@@ -346,38 +290,85 @@ class JavaExam {
         
         container.innerHTML = `
             <div class="matching-instructions">
-                <p>Click on a prompt on the left, then click on the corresponding answer on the right to create a match.</p>
+                <strong>Instructions:</strong> Click on an item from the left column, then click on its matching answer from the right column.
             </div>
-            <div class="matching-content">
+            <div class="matching-grid">
                 <div class="matching-prompts">
                     <h4>Items to Match</h4>
                     ${question.prompts.map((prompt, index) => `
-                        <div class="matching-item prompt-item" data-prompt-index="${index}" data-prompt-text="${prompt}">
-                            <span class="prompt-text">${prompt}</span>
-                            <span class="match-indicator">${savedMatches[prompt] ? '→ ' + savedMatches[prompt] : ''}</span>
+                        <div class="matching-item prompt ${savedMatches[prompt] ? 'matched' : ''}" data-prompt="${prompt}" data-index="${index}">
+                            ${prompt}
+                            <div class="match-connection" id="match-${question.id}-${index}">
+                                ${savedMatches[prompt] ? `→ ${savedMatches[prompt]}` : 'Click to match →'}
+                            </div>
                         </div>
                     `).join('')}
                 </div>
                 <div class="matching-answers">
-                    <h4>Answer Options</h4>
+                    <h4>Available Answers</h4>
                     ${question.answers.map((answer, index) => `
-                        <div class="matching-item answer-item" data-answer-index="${index}" data-answer-text="${answer}">
+                        <div class="matching-item answer" data-answer="${answer}" data-index="${index}">
                             ${answer}
                         </div>
                     `).join('')}
                 </div>
             </div>
-            <div class="matching-controls">
-                <button type="button" class="btn btn-secondary" onclick="exam.clearAllMatches(${question.id})">Clear All Matches</button>
-            </div>
         `;
         
-        // Initialize matching state for this question
-        this.currentMatchingQuestion = question.id;
-        this.selectedPrompt = null;
+        // Add click handlers for matching
+        this.setupMatchingHandlers(question);
+    }
+    
+    setupMatchingHandlers(question) {
+        let selectedPrompt = null;
+        let selectedAnswer = null;
         
-        // Add event listeners to matching items
-        this.addMatchingEventListeners(question);
+        // Handle prompt clicks
+        document.querySelectorAll('.matching-item.prompt').forEach(promptElement => {
+            promptElement.onclick = () => {
+                // Clear previous selections
+                document.querySelectorAll('.matching-item').forEach(item => {
+                    item.classList.remove('selected-for-matching');
+                });
+                
+                selectedPrompt = promptElement.dataset.prompt;
+                selectedAnswer = null;
+                promptElement.classList.add('selected-for-matching');
+            };
+        });
+        
+        // Handle answer clicks
+        document.querySelectorAll('.matching-item.answer').forEach(answerElement => {
+            answerElement.onclick = () => {
+                if (selectedPrompt) {
+                    selectedAnswer = answerElement.dataset.answer;
+                    this.makeMatch(question.id, selectedPrompt, selectedAnswer);
+                    
+                    // Clear selections
+                    document.querySelectorAll('.matching-item').forEach(item => {
+                        item.classList.remove('selected-for-matching');
+                    });
+                    selectedPrompt = null;
+                    selectedAnswer = null;
+                }
+            };
+        });
+    }
+    
+    makeMatch(questionId, prompt, answer) {
+        let currentMatches = this.userAnswers.get(questionId) || {};
+        currentMatches[prompt] = answer;
+        this.userAnswers.set(questionId, currentMatches);
+        
+        // Update display
+        const matchDisplay = document.getElementById(`match-${questionId}-${Array.from(document.querySelectorAll('.matching-item.prompt')).findIndex(el => el.dataset.prompt === prompt)}`);
+        if (matchDisplay) {
+            matchDisplay.textContent = `→ ${answer}`;
+            matchDisplay.parentElement.classList.add('matched');
+        }
+        
+        this.updateNavigationPanel();
+        this.updateExamInfo();
     }
     
     selectOption(questionId, optionIndex, type) {
@@ -399,17 +390,24 @@ class JavaExam {
     }
     
     updateOptionStyles(questionId) {
+        const currentQuestion = this.examQuestions[this.currentQuestionIndex];
+        if (!currentQuestion || currentQuestion.id !== questionId) return;
+        
         const options = document.querySelectorAll('.option');
         const savedAnswer = this.userAnswers.get(questionId);
         
         options.forEach((option, index) => {
             const input = option.querySelector('input');
+            if (!input) return;
+            
             const inputValue = parseInt(input.value);
             
             if (savedAnswer && savedAnswer.includes(inputValue)) {
                 option.classList.add('selected');
+                input.checked = true;
             } else {
                 option.classList.remove('selected');
+                input.checked = false;
             }
         });
     }
@@ -418,86 +416,6 @@ class JavaExam {
         this.userAnswers.set(questionId, [answer]);
         this.updateNavigationPanel();
         this.updateExamInfo();
-    }
-    
-    addMatchingEventListeners(question) {
-        // Add click listeners to prompt items
-        document.querySelectorAll('.prompt-item').forEach(promptItem => {
-            promptItem.addEventListener('click', () => {
-                // Clear previous selection
-                document.querySelectorAll('.prompt-item').forEach(item => item.classList.remove('selected'));
-                
-                // Select this prompt
-                promptItem.classList.add('selected');
-                this.selectedPrompt = {
-                    text: promptItem.dataset.promptText,
-                    element: promptItem
-                };
-            });
-        });
-        
-        // Add click listeners to answer items
-        document.querySelectorAll('.answer-item').forEach(answerItem => {
-            answerItem.addEventListener('click', () => {
-                if (this.selectedPrompt) {
-                    this.createMatch(question.id, this.selectedPrompt.text, answerItem.dataset.answerText);
-                    this.updateMatchingDisplay(question);
-                    this.selectedPrompt = null;
-                    document.querySelectorAll('.prompt-item').forEach(item => item.classList.remove('selected'));
-                }
-            });
-        });
-    }
-    
-    createMatch(questionId, promptText, answerText) {
-        let currentMatches = this.userAnswers.get(questionId) || {};
-        currentMatches[promptText] = answerText;
-        this.userAnswers.set(questionId, currentMatches);
-        this.updateNavigationPanel();
-        this.updateExamInfo();
-    }
-    
-    updateMatchingDisplay(question) {
-        const savedMatches = this.userAnswers.get(question.id) || {};
-        
-        // Update match indicators
-        document.querySelectorAll('.prompt-item').forEach(promptItem => {
-            const promptText = promptItem.dataset.promptText;
-            const matchIndicator = promptItem.querySelector('.match-indicator');
-            if (savedMatches[promptText]) {
-                matchIndicator.textContent = '→ ' + savedMatches[promptText];
-                promptItem.classList.add('matched');
-            } else {
-                matchIndicator.textContent = '';
-                promptItem.classList.remove('matched');
-            }
-        });
-        
-        // Update answer items to show if they're used
-        document.querySelectorAll('.answer-item').forEach(answerItem => {
-            const answerText = answerItem.dataset.answerText;
-            const isUsed = Object.values(savedMatches).includes(answerText);
-            if (isUsed) {
-                answerItem.classList.add('used');
-            } else {
-                answerItem.classList.remove('used');
-            }
-        });
-    }
-    
-    clearAllMatches(questionId) {
-        this.userAnswers.set(questionId, {});
-        const question = this.examQuestions.find(q => q.id === questionId);
-        if (question) {
-            this.updateMatchingDisplay(question);
-        }
-        this.updateNavigationPanel();
-        this.updateExamInfo();
-    }
-
-    selectMatchingItem(type, index) {
-        // Legacy function - kept for compatibility but functionality moved to addMatchingEventListeners
-        console.log(`Selected ${type} ${index}`);
     }
     
     previousQuestion() {
@@ -569,52 +487,10 @@ class JavaExam {
                 item.classList.add('unanswered');
             }
             
-            const userAnswer = this.userAnswers.get(question.id);
-            let userAnswerText = 'No answer';
-            
-            if (userAnswer) {
-                try {
-                    switch (question.type) {
-                        case 'single-choice':
-                        case 'multiple-choice':
-                            if (Array.isArray(userAnswer) && question.options) {
-                                userAnswerText = userAnswer.map(index => {
-                                    return question.options[index] || `Option ${index}`;
-                                }).join(', ');
-                            }
-                            break;
-                        case 'fill-blank':
-                            userAnswerText = Array.isArray(userAnswer) ? (userAnswer[0] || 'No answer') : userAnswer;
-                            break;
-                        case 'matching':
-                            if (typeof userAnswer === 'object') {
-                                userAnswerText = Object.entries(userAnswer).map(([k, v]) => `${k}: ${v}`).join('; ') || 'No matches';
-                            }
-                            break;
-                    }
-                } catch (error) {
-                    userAnswerText = 'Error processing answer';
-                }
-            }
-            
-            const questionPreview = question.question ? question.question.replace(/```[\s\S]*?```/g, '[Code Block]').substring(0, 80) : 'Question text unavailable';
-            
             item.innerHTML = `
-                <div class="review-item-header">
-                    <strong>Question ${index + 1} (${this.formatQuestionType(question.type)}) - ${question.points} pt${question.points !== 1 ? 's' : ''}</strong>
-                    <span class="answer-status ${this.userAnswers.has(question.id) ? 'answered' : 'unanswered'}">${this.userAnswers.has(question.id) ? '✓ Answered' : '⚠ Not answered'}</span>
-                </div>
-                <p class="question-preview">${questionPreview}${question.question && question.question.length > 80 ? '...' : ''}</p>
-                <div class="user-answer-preview">
-                    <strong>Your answer:</strong> <span class="answer-text">${userAnswerText}</span>
-                </div>
-                <div class="explanation-preview">
-                    <strong>Explanation:</strong> <span class="explanation-text">${question.explanation || 'No explanation available.'}</span>
-                </div>
-                <div class="review-actions">
-                    <button class="btn-mini" onclick="event.stopPropagation(); exam.goToQuestion(${index})">Edit Answer</button>
-                    <button class="btn-mini" onclick="event.stopPropagation(); exam.showExplanationModal('${(question.question || '').replace(/'/g, "\\'")}', '${(question.explanation || 'No explanation available.').replace(/'/g, "\\'")}')">View Full Explanation</button>
-                </div>
+                <strong>Question ${index + 1}</strong>
+                <p>${question.question.substring(0, 100)}...</p>
+                <span>${this.userAnswers.has(question.id) ? 'Answered' : 'Not answered'}</span>
             `;
             
             item.onclick = () => this.goToQuestion(index);
@@ -626,14 +502,7 @@ class JavaExam {
         this.examEndTime = new Date();
         clearInterval(this.timerInterval);
         
-        const unansweredCount = this.examQuestions.length - this.userAnswers.size;
-        let message = 'Are you sure you want to submit your exam? You cannot change your answers after submission.';
-        
-        if (unansweredCount > 0) {
-            message += `\n\nNote: You have ${unansweredCount} unanswered question${unansweredCount !== 1 ? 's' : ''}.`;
-        }
-        
-        this.showModal('Submit Exam', message, () => {
+        this.showModal('Submit Exam', 'Are you sure you want to submit your exam? You cannot change your answers after submission.', () => {
             this.showResultsScreen();
         });
     }
@@ -815,16 +684,12 @@ class JavaExam {
                             ${isCorrect ? '✓' : '✗'} ${isCorrect ? question.points : 0}/${question.points} pts
                         </span>
                     </div>
-                    <p class="question-preview"><strong>Question:</strong> ${questionPreview}${question.question && question.question.length > 80 ? '...' : ''}</p>
+                    <p class="question-preview">${questionPreview}${question.question && question.question.length > 80 ? '...' : ''}</p>
                     <div class="answer-comparison">
                         <div class="user-answer">
                             <strong>Your answer:</strong> <span class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">${userAnswerText}</span>
                         </div>
                         ${!isCorrect ? `<div class="correct-answer-display"><strong>Correct answer:</strong> <span class="correct-answer">${correctAnswerText}</span></div>` : ''}
-                    </div>
-                    <div class="explanation-section">
-                        <strong>Explanation:</strong> 
-                        <div class="explanation-text">${question.explanation || 'No explanation available.'}</div>
                     </div>
                 </div>
             `;
@@ -839,53 +704,6 @@ class JavaExam {
             item.title = 'Click to see explanation';
             
             resultsList.appendChild(item);
-        });
-        
-        // Topic analysis
-        this.updateTopicAnalysis();
-    }
-    
-    updateTopicAnalysis() {
-        const topics = {
-            'OOP Concepts': [16, 29, 30, 44, 53],
-            'Inheritance': [2, 3, 15, 21, 23, 25],
-            'Interfaces': [1, 8, 24],
-            'Exception Handling': [9, 12],
-            'String Operations': [10, 11, 27],
-            'Arrays & Collections': [13, 26, 28, 57],
-            'Data Types & Variables': [17, 60],
-            'Control Structures': [18],
-            'UML & System Design': [31, 32, 45, 50, 51, 58],
-            'SDLC & Methodologies': [48, 49, 54, 59],
-            'Java Memory Management': [52, 55],
-            'Design Patterns': [56]
-        };
-        
-        const analysisContainer = document.getElementById('topic-analysis');
-        analysisContainer.innerHTML = '';
-        
-        Object.entries(topics).forEach(([topicName, questionIds]) => {
-            const topicQuestions = this.examQuestions.filter(q => questionIds.includes(q.id));
-            if (topicQuestions.length === 0) return;
-            
-            let correctCount = 0;
-            topicQuestions.forEach(question => {
-                const userAnswer = this.userAnswers.get(question.id);
-                if (userAnswer && this.isAnswerCorrect(question, userAnswer)) {
-                    correctCount++;
-                }
-            });
-            
-            const percentage = Math.round((correctCount / topicQuestions.length) * 100);
-            
-            const topicItem = document.createElement('div');
-            topicItem.className = 'topic-item';
-            topicItem.innerHTML = `
-                <span>${topicName}</span>
-                <span class="topic-score">${correctCount}/${topicQuestions.length} (${percentage}%)</span>
-            `;
-            
-            analysisContainer.appendChild(topicItem);
         });
     }
     
@@ -910,7 +728,6 @@ class JavaExam {
         const seconds = Math.floor((timeTaken / 1000) % 60);
         
         const results = {
-            examType: 'Java Programming TCA',
             examDate: this.examStartTime.toISOString(),
             timeTaken: `${minutes}:${seconds.toString().padStart(2, '0')}`,
             score: score,
@@ -921,10 +738,9 @@ class JavaExam {
                 
                 return {
                     questionNumber: index + 1,
-                    type: question.type,
                     question: question.question,
                     userAnswer: userAnswer,
-                    correctAnswer: question.correctAnswers || question.correctAnswer || question.correctMatches,
+                    correctAnswer: question.correctAnswers || question.correctAnswer,
                     isCorrect: isCorrect,
                     points: isCorrect ? question.points : 0,
                     maxPoints: question.points,
@@ -938,7 +754,7 @@ class JavaExam {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `java-tca-exam-results-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `database-exam-results-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
     }
@@ -974,17 +790,13 @@ class JavaExam {
         }
         this.hideModal();
     }
-
-    showExplanationModal(questionText, explanation) {
-        this.showModal('Question Explanation', `${questionText}\n\nExplanation: ${explanation}`, null);
-    }
 }
 
 // Initialize the exam application
 let exam;
 
 document.addEventListener('DOMContentLoaded', () => {
-    exam = new JavaExam();
+    exam = new DatabaseExam();
 });
 
 // Prevent accidental page refresh during exam
